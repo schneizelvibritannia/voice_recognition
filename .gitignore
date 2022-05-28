@@ -1,0 +1,6 @@
+/.idea
+/logs
+*.pyc
+/libs
+.env
+/models

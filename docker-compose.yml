@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  app:
+    container_name: space-voice-recognition
+    restart: on-failure
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    command: >
+      sh -c "uvicorn main:app --host 0.0.0.0 --port 8000"
+    volumes:
+      - .:/app
+    env_file:
+      - ./.env.docker
+    depends_on:
+      - database
+
+
+  database:
+    image: postgres:12-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./.env.docker
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
